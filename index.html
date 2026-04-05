@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DomainSpark — AI Domain Name Generator</title>
+    <meta name="description" content="Generate creative, brandable domain names for your startup in seconds. Free AI-powered domain name generator.">
+    <meta name="keywords" content="domain name generator, startup domain, brand name, business name generator">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5XWKDQKE13"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-5XWKDQKE13');
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="main-nav">
+        <div class="nav-container">
+            <a href="/" class="nav-logo" id="nav-logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">DomainSpark</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link" id="nav-features">Features</a>
+                <a href="#how-it-works" class="nav-link" id="nav-how">How it works</a>
+                <button class="nav-cta" id="nav-cta" onclick="document.getElementById('idea-input').focus()">Get Started</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero-section">
+        <div class="hero-content">
+            <span class="hero-badge" id="hero-badge">✨ FREE DOMAIN NAME GENERATOR</span>
+            <h1 class="hero-title" id="hero-title">
+                Find the perfect domain<br>for your next big idea.
+            </h1>
+            <p class="hero-subtitle" id="hero-subtitle">
+                Enter your business idea and we'll generate 10 creative, brandable domain names instantly. No signup required.
+            </p>
+
+            <!-- Industry Selector -->
+            <div class="industry-selector" id="industry-selector">
+                <button class="industry-chip active" data-industry="all" onclick="selectIndustry(this)">🌐 All</button>
+                <button class="industry-chip" data-industry="tech" onclick="selectIndustry(this)">💻 Tech</button>
+                <button class="industry-chip" data-industry="food" onclick="selectIndustry(this)">🍕 Food</button>
+                <button class="industry-chip" data-industry="fashion" onclick="selectIndustry(this)">👗 Fashion</button>
+                <button class="industry-chip" data-industry="health" onclick="selectIndustry(this)">🏥 Health</button>
+                <button class="industry-chip" data-industry="finance" onclick="selectIndustry(this)">💰 Finance</button>
+                <button class="industry-chip" data-industry="education" onclick="selectIndustry(this)">📚 Education</button>
+                <button class="industry-chip" data-industry="travel" onclick="selectIndustry(this)">✈️ Travel</button>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-wrapper" id="input-wrapper">
+                <div class="input-container">
+                    <input 
+                        type="text" 
+                        id="idea-input" 
+                        class="idea-input" 
+                        placeholder="Describe your business idea... e.g. online pet food delivery"
+                        maxlength="100"
+                        autocomplete="off"
+                    >
+                    <button class="generate-btn" id="generate-btn" onclick="generateDomains()">
+                        <span class="btn-text">Generate</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+                <p class="input-hint" id="input-hint">Press Enter or click Generate to spark domain ideas</p>
+            </div>
+        </div>
+
+        <!-- Decorative gradient orbs -->
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results-section">
+        <div class="results-container">
+            <div class="results-header" id="results-header">
+                <h2 class="results-title">Your domain suggestions</h2>
+                <p class="results-subtitle">Click copy or ❤️ to save favorites. Buy links go to Namecheap.</p>
+                <div class="results-actions">
+                    <button class="regenerate-btn" id="regenerate-btn" onclick="generateDomains()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+                        Regenerate
+                    </button>
+                    <button class="favorites-toggle-btn" id="favorites-toggle-btn" onclick="toggleFavorites()">
+                        <span>❤️</span>
+                        <span>Favorites</span>
+                        <span class="fav-count" id="fav-count">0</span>
+                    </button>
+                </div>
+            </div>
+            <div class="results-grid" id="results-grid">
+                <!-- Domain cards will be injected here -->
+            </div>
+            <!-- Favorites Panel -->
+            <div class="favorites-panel" id="favorites-panel">
+                <div class="favorites-panel-header">
+                    <h3>❤️ Your Shortlist</h3>
+                    <button class="clear-favs-btn" id="clear-favs-btn" onclick="clearFavorites()">Clear All</button>
+                </div>
+                <div class="favorites-list" id="favorites-list">
+                    <!-- Favorite items injected here -->
+                </div>
+                <div class="favorites-empty" id="favorites-empty">
+                    <p>No favorites yet. Click the ❤️ on any domain to save it.</p>
+                </div>
+            </div>
+
+            <div class="results-empty" id="results-empty">
+                <div class="empty-icon">🔍</div>
+                <p class="empty-text">Your generated domains will appear here</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="features-container">
+            <span class="section-badge">WHY DOMAINSPARK</span>
+            <h2 class="section-title" id="features-title">
+                Features designed<br>for smart branding.
+            </h2>
+            <p class="section-subtitle">
+                DomainSpark uses smart algorithms to generate domains that are short, memorable, and brandable.
+            </p>
+
+            <div class="features-grid" id="features-grid">
+                <div class="feature-card" id="feature-1">
+                    <div class="feature-icon">⚡</div>
+                    <span class="feature-label">INSTANT</span>
+                    <h3 class="feature-title">Lightning fast<br>generation</h3>
+                    <p class="feature-desc">Get 10 creative domain suggestions in under a second. No waiting, no loading.</p>
+                </div>
+                <div class="feature-card" id="feature-2">
+                    <div class="feature-icon">🎯</div>
+                    <span class="feature-label">SMART</span>
+                    <h3 class="feature-title">Context-aware<br>suggestions</h3>
+                    <p class="feature-desc">Our algorithm understands your business idea and crafts relevant, brandable names.</p>
+                </div>
+                <div class="feature-card" id="feature-3">
+                    <div class="feature-icon">📋</div>
+                    <span class="feature-label">ONE CLICK</span>
+                    <h3 class="feature-title">Copy & go<br>register</h3>
+                    <p class="feature-desc">Copy any domain with one click and head straight to your favorite registrar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section class="how-section" id="how-it-works">
+        <div class="how-container">
+            <span class="section-badge">HOW IT WORKS</span>
+            <h2 class="section-title" id="how-title">Three simple steps.</h2>
+            <div class="steps-grid" id="steps-grid">
+                <div class="step-card" id="step-1">
+                    <div class="step-number">01</div>
+                    <h3 class="step-title">Describe your idea</h3>
+                    <p class="step-desc">Type in a short description of your business or project.</p>
+                </div>
+                <div class="step-card" id="step-2">
+                    <div class="step-number">02</div>
+                    <h3 class="step-title">Get suggestions</h3>
+                    <p class="step-desc">We instantly generate 10 unique, brandable domain names.</p>
+                </div>
+                <div class="step-card" id="step-3">
+                    <div class="step-number">03</div>
+                    <h3 class="step-title">Copy & register</h3>
+                    <p class="step-desc">Copy your favorite and register it on any domain registrar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title" id="cta-title">Ready to find your<br>perfect domain?</h2>
+            <p class="cta-subtitle">It's completely free. No signup. No limits.</p>
+            <button class="cta-btn" id="cta-btn" onclick="document.getElementById('idea-input').focus(); window.scrollTo({top: 0, behavior: 'smooth'})">
+                Start Generating →
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">DomainSpark</span>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <p class="footer-copy">© 2026 DomainSpark. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="copy-toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-text">Domain copied to clipboard!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
